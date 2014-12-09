@@ -66,11 +66,6 @@ class Line:
 			tmp = 0
 			tmp2 = 0
 
-			try:
-				if euc(self.startPos, wall.center) / self.mag > t1:
-					continue
-			except:
-				pass
 
 			#top line segment of wall
 			#solve two equations for two unkowns of the the two vectors(ray and wall segment)
@@ -225,8 +220,11 @@ class Guard:
 			#add ones that are in the field of view
 			#cut off the rays at any intersection 
 			blue = (0, 0, 255)
-			walls = sorted(self.level.walls, key = lambda x: euc(self.guardRect.center, x.center))
-			for wall in self.level.walls:
+			#walls = sorted(self.level.walls, key = lambda x: euc(self.guardRect.center, x.center))
+
+			walls = self.level.walls
+
+			for wall in walls:
 				#create a line from the guard to a wall corner
 				#top left corner
 				curX = wall.x + 1
@@ -296,7 +294,7 @@ class Guard:
 			#add rays at edge of field of view, and one in the center(case in which no walls are in view)
 			self.rays.append(Line(self.guardRect.center, (self.guardRect.center[0] - math.sin(math.radians(self.theta + self.fov)) * self.range, self.guardRect.center[1] - math.cos(math.radians(self.theta + self.fov)) * self.range)).nearestIntersection(walls))
 			self.rays.append(Line(self.guardRect.center, (self.guardRect.center[0] - math.sin(math.radians(self.theta - self.fov)) * self.range, self.guardRect.center[1] - math.cos(math.radians(self.theta - self.fov)) * self.range)).nearestIntersection(walls))
-
+			self.rays.append(Line(self.guardRect.center, (self.guardRect.center[0] - math.sin(math.radians(self.theta)) * self.range, self.guardRect.center[1] - math.cos(math.radians(self.theta - self.fov)) * self.range)).nearestIntersection(walls))
 			#normalize all rays to a maximum length based on view range
 			for ray in self.rays:
 				if ray.mag > self.range:

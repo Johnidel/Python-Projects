@@ -12,6 +12,7 @@ from level_builder import LevelBuilder
 
 size = (1024, 768)
 xCenter, yCenter= size[0] / 2, size[1] / 2
+TOT_LEVELS = 6
 
 #initialize window
 screen = pygame.display.set_mode(size,pygame.SRCALPHA)
@@ -58,8 +59,6 @@ def levelFileReader(filename):
 	paths=[]           #array to hold the paths of number of guards for the level
 	guards = []
 	safes = []
-
-
 	#open file
 	level_file = open(filename + '.txt')
 	#read file
@@ -99,7 +98,6 @@ def levelFileReader(filename):
 	#prepping the guard infow
 	guard_lines = level_list[1].split('\n')[1:]
 	speed = guard_lines[0] #first line
-	print("hello",speed)
 	rang = guard_lines[1] #second line
 	fov = guard_lines[2] #third line
 	#putting the paths into an array
@@ -127,13 +125,14 @@ pygame.mouse.set_visible(False)
 
 pygame.init()
 
-level= levelFileReader("Levels/level4")
+curLevel = 1
+
+level= levelFileReader("Levels/levelOneH")
 font = pygame.font.SysFont('timesnewroman', 100)
 pausedText = font.render("PAUSED", 1, (255,255,255))
 font2 = pygame.font.SysFont("timesnewroman", 36)
 continueText = font2.render("Press spacebar to continue", 1, (255,255,255))
 font3 = pygame.font.SysFont('timesnewroman', 175)
-
 
 timeSlept = 0
 timePStart = time.time()
@@ -205,7 +204,7 @@ while playing == True:
 		
 		if textInc > 24:
 			textInc = 0
-			level = levelFileReader("Levels/level2")
+			level = levelFileReader("Levels/level" + str(curLevel))
 
 		screen.blit(outlinedText("Game Over", font3, (255 , 0, 0), (0,0,0), 3, textInc, back, (-100, -100)), (100, 100))
 
@@ -220,7 +219,8 @@ while playing == True:
 
 		if textInc > 24:
 			textInc = 0
-			level = levelFileReader("Levels/level1")
+			curLevel += 1
+			level = levelFileReader("Levels/level" + str(curLevel))
 
 		screen.blit(outlinedText("Level", font3, (255 , 0, 0), (0,0,0), 3, textInc, back, (-350, -100)), (350, 100))
 		screen.blit(outlinedText("Complete", font3, (255 , 0, 0), (0,0,0), 3, textInc, back, (-200, -300)), (200, 300))

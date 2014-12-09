@@ -86,9 +86,7 @@ class LevelBuilder():
 						self.bodies.pop(i)
 						self.cooldown = 10
 
-		print(self.keys, " - ", len(self.safes))
 		if self.keys == len(self.safes) and self.player.playerRect.colliderect(self.doorRect):
-			print("hello")
 			self.gameOver = 2
 
 	def draw(self, screen):
