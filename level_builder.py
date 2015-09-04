@@ -38,6 +38,7 @@ class LevelBuilder():
 		self.keyImg = pygame.image.load("res/goldbar.png").convert_alpha()
 		grd = self.getRectGrid()
 		self.gameOver = 0
+		self.inc = 0
 
 
 	def update(self, keys):
@@ -88,6 +89,11 @@ class LevelBuilder():
 
 		if self.keys == len(self.safes) and self.player.playerRect.colliderect(self.doorRect):
 			self.gameOver = 2
+
+		if self.inc == 0:
+			self.gameOver = 3
+
+		self.inc += 1
 
 	def draw(self, screen):
 		screen.blit(self.floor_img, (0,0))
@@ -173,81 +179,5 @@ class LevelBuilder():
 					GridList[bottom_coordinate - 2][right_coordinate] = 1
 				if 0 < (bottom_coordinate) < 24 and 0 < right_coordinate  < 31:
 					GridList[bottom_coordinate][right_coordinate] = 1
-		
-		'''
-		GridList = [[0 for x in range(64)] for y in range(48)]
-		for wall in self.walls:
-			left_coordinate, right_coordinate = int(wall.left/16), int(wall.right/16)
-			top_coordinate, bottom_coordinate = int(wall.top/16), int(wall.bottom/16)
-			
-			for i in range(left_coordinate, right_coordinate):
-				for j in range(-2, (bottom_coordinate-top_coordinate)+2):
-					if top_coordinate + j>= 0 and top_coordinate+j<=47:
-						GridList[top_coordinate + j][i] = 1
-			
-			for i in range(top_coordinate, bottom_coordinate):
-				for j in range(-2, (right_coordinate-left_coordinate)+2):
-					if left_coordinate+j >= 0 and left_coordinate+j<=63:
-						GridList[i][left_coordinate+j] = 1
-
-			if bottom_coordinate - top_coordinate > right_coordinate - left_coordinate:
-				if 0 < (bottom_coordinate) < 48 and 0 < right_coordinate - 1 < 31:
-					GridList[bottom_coordinate][left_coordinate - 1] = 1
-				if 0 < (bottom_coordinate) < 48 and 0 < right_coordinate + 1 < 31:
-					GridList[bottom_coordinate][left_coordinate + 1] = 1
-
-				if 0 < (top_coordinate) < 48 and 0 < right_coordinate - 1 < 31:
-					GridList[bottom_coordinate][left_coordinate - 1] = 1
-				if 0 < (top_coordinate) < 48 and 0 < right_coordinate + 1 < 31:
-					GridList[top_coordinate][left_coordinate + 1] = 1
-			
-			else:
-				if 0 < (bottom_coordinate - 2) < 48 and 0 < left_coordinate - 1< 31:
-					GridList[bottom_coordinate - 2][left_coordinate - 1] = 1
-				if 0 < (bottom_coordinate) < 24 and 0 < left_coordinate  - 1< 31:
-					GridList[bottom_coordinate][left_coordinate - 1] = 1
-
-				if 0 < (bottom_coordinate - 2) < 24 and 0 < right_coordinate < 31:
-					GridList[bottom_coordinate - 2][right_coordinate] = 1
-				if 0 < (bottom_coordinate) < 24 and 0 < right_coordinate  < 31:
-					GridList[bottom_coordinate][right_coordinate] = 1
-		'''
 			
 		return GridList
-
-#path finding test(IGNORE)
-'''
-size = (1024, 768)
-rectForWalls = []
-guards = []
-rectForWalls = [pygame.Rect((0,352,368,32)), pygame.Rect((352,0,32,224)),
-                        pygame.Rect((528,0,32,448)), pygame.Rect((702,432,336,32))]
-
-rectForWalls.append(pygame.Rect(0,0,size[0], 32))
-rectForWalls.append(pygame.Rect(0,size[1] - 32,size[0], 32))
-rectForWalls.append(pygame.Rect(0, 32, 32, size[1] - 32))
-rectForWalls.append(pygame.Rect(size[0] - 32, 32, 32, size[1] - 32))
-
-level_one = LevelBuilder(rectForWalls, guards)
-grd = level_one.getRectGrid()
-star = astar.AStar(grd.copy(), (4,4), (40,4))
-start = (4,4)
-
-star.startPath(start, (20,4))
-
-timeStart = time.time()
-for i in range(25):
-	if not star.notFound:
-		break
-	path = star.pathFind(.01)
-
-
-print(path)
-print(time.time() - timeStart)
-
-for ele in path:
-	grd[ele[0]][ele[1]] = 5
-
-for ele in grd:
-	print(ele)
-'''

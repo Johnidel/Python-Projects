@@ -27,6 +27,8 @@ class Credits:
 		self.strings.append(font.render("Tristan Hartwell", 1, (0, 0, 0)))
 		self.strings.append(font.render("Max Hasenauer", 1, (0, 0, 0)))
 		self.strings.append(font.render("Brandon Ng", 1, (0, 0, 0)))
+		self.strings.append(position_font.render("Music", 1, (0,0,0)))
+		self.strings.append(font.render("Jared Brill", 1, (0,0,0)))
 
 	def draw(self, screen):
 		screen.blit(self.bgImg, (0, 0))

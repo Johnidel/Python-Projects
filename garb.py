@@ -17,39 +17,6 @@ TOT_LEVELS = 10
 #initialize window
 screen = pygame.display.set_mode(size,pygame.SRCALPHA)
 
-FRAMES_PER_SECOND = 30
-TIME_PER_FRAME = 1.0 / 30
-time_start = 0
-timeS = time.time()
-playing = True
-#bools for keys
-keys = {"W": False, "S" : False, "D" : False, "A" : False, "P" : False, "SPACE" : False, "R" : False}
-
-def outlinedText(text, font, colorIn, colorOut, width, alpha = 255, back = None, pos = (0, 0)):
-
-	textI = font.render(text, 1, colorIn)
-	textO = font.render(text, 1, colorOut)
-
-	newSurf = pygame.Surface((textI.get_size()[0] + width * 2, textI.get_size()[1] + width * 2))
-
-	if back:
-		newSurf.blit(back, pos)
-
-	newSurf.blit(textO, (0, 0))
-	newSurf.blit(textO, (width * 2, 0))
-	newSurf.blit(textO, (0, width * 2))
-	newSurf.blit(textO, (width * 2, width * 2))
-	newSurf.blit(textO, (width, 0))
-	newSurf.blit(textO, (width * 2, 2))
-	newSurf.blit(textO, (0, width))
-	newSurf.blit(textO, (width * 2, width))
-		
-	newSurf.blit(textI, (width, width))
-
-	newSurf.set_alpha(int(alpha))
-
-	return newSurf
-
 def levelFileReader(filename):
 	#variables
 	levelRects=[]      #array to hold the rectangle object

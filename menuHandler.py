@@ -27,7 +27,7 @@ class MenuHandler:
 
 pygame.init()
 size = (1024,768)
-pygame.display.set_caption("Body Game")
+pygame.display.set_caption("211")
 screen = pygame.display.set_mode(size)
 
 
@@ -49,7 +49,6 @@ while playing:
 
 	handler.update()
 	handler.draw(screen)
-
 	pygame.display.flip()
 
 

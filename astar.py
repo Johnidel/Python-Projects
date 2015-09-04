@@ -4,13 +4,25 @@ import time
 
 #path finding algorithm
 
-##TO DO: I am able to return a list of every coordinate we step though to reach
-## the desired goal. If someone could write a method or something that turns that 
-## into less points based on linear lines it would greatly increase performance.
-## i.e Lets say points are (1,1) (1, 2) (1, 3) (1,4) (2, 5) (3, 6) (4, 7)
-## could be written as (1,1) (1,4) (4, 7)
-## or if points are (1,1) (1, 2) (1, 3) (1,4) (2, 7) (3, 10) (4, 13)
-## could be written as (1,1) (1,4) (4, 13)
+def SameSlope(path):
+    pathNew = []
+    pattern = 0,0
+    prev = path[0]
+    pathNew.append(path[0])
+    for i in range(len(path)):
+        if pattern[0]==0 and pattern[1]==0:
+            if i+1 < len(path):
+                pattern = (path[i+1][0] - path[i][0],path[i+1][1]-path[i][1])
+                prev = path[i]
+        else:
+            if path[i][0]-prev[0]==pattern[0] and path[i][1]-prev[1]==pattern[1]:
+                prev = path[i]
+            else:
+                pathNew.append(prev)
+                pattern = (path[i][0]-prev[0],path[i][1]-prev[1])
+                prev = path[i]
+    pathNew.append(path[-1])
+    return pathNew
 
 class Node:
 	def __init__(self, xPos, yPos, parent, distance, priority):
@@ -93,7 +105,7 @@ class AStar:
 					pathList.append((curNode.x, curNode.y))
 					curNode = curNode.parent
 				self.path = pathList[::-1]
-				return self.path
+				return SameSlope(self.path)
 
 			for i in range(len(dx)):
 				childX = x + dx[i]

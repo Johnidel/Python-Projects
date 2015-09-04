@@ -396,7 +396,7 @@ class Guard:
 			self.collisionRect = pygame.Rect(self.pos[0], self.pos[1], 1, 1)
 
 		else:
-			self.theta += 10
+			self.theta += 3
 			if not self.standing:
 				self.searching = False
 				self.pathFound = False
